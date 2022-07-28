@@ -10,11 +10,11 @@ class BookComponent extends React.Component{
     render()
     {
         return (  
-            <div style={{flex:1}}>
+           
             <Books >
-    
             </Books>
-            </div>)
+            
+            )
       
     }
 

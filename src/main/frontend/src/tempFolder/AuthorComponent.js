@@ -7,10 +7,10 @@ class AuthorComponent extends React.Component{
     {
         return (
 
-        <div style={{flex:1}}>
+    
         <Authors>
         </Authors>
-        </div>
+        
         )
       
     }
