@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +60,7 @@ public class BookController {
     {
              //use if statements to confirm the post request.
 
-            kafkaTemplate.send("posts","Book created: "+ book );
+            kafkaTemplate.send("posts","Book Posted: "+ book );
             bookService.addBook(book);
             //add post topic to kafka and monitor that.
 
@@ -68,10 +69,12 @@ public class BookController {
     @DeleteMapping(path={"{id}"})
     public void deleteBook(@PathVariable Long id)
     {
+        Instant instant = Instant.now();
+
         Book book = bookRepository.findById(id).orElseThrow(()-> new IllegalStateException(
                 "Book with id " + id+ "does not exist."
         ));
-        kafkaTemplate.send("deletions", "Book deleted: "+ book);
+        kafkaTemplate.send("deletions", "Book Deleted: "+ book +" at " + instant  );
         bookService.deleteBook(id);
     }
 
@@ -83,6 +86,10 @@ public class BookController {
     )
     {
          bookService.registerAuthor(bookId,authorId);
+        Book book = bookRepository.findById(bookId).orElseThrow(()-> new IllegalStateException(
+                "Book with id " + bookId+ "  does not exist."
+        ));
+        kafkaTemplate.send("updates", "Book Updated: "+book);
 
     }//end of authorToBook() function
 
@@ -98,10 +105,11 @@ public class BookController {
 
        bookService.updateBook(bookId, isbn, title, publisher, pageNumber);
         Book book = bookRepository.findById(bookId).orElseThrow(()-> new IllegalStateException(
-                "Book with id " + bookId+ "does not exist."
+                "Book with id " + bookId+ "  does not exist."
         ));
 
-        kafkaTemplate.send("updates", "Updated Book: "+book);
+        kafkaTemplate.send("updates", "Book Updated: "+book);
+        System.out.println("updated");
     }//end of updatebook() function
 
 

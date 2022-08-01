@@ -1,6 +1,7 @@
 import React, { Component, useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import KafkaDeletions from '../kafkaComponents/KafkaDeletions';
+import { render } from '@testing-library/react';
 
 
 const Books = () => {
@@ -11,39 +12,8 @@ const Books = () => {
     const [isbn, setIsbn] = useState(0);
     const [pageNumber, setPageNumber] = useState(0);
     const [publisher, setPublisher] = useState('');
-    //const [author, setAuthor] = useState('');
-
-
-
-    function getBooks() {
-        axios.get("http://localhost:8080/api/v1/book/")
-            .then(res => {
-
-                setBooks(res.data);
-            })
-
-        // fetch("http://localhost:8080/api/v1/book/")
-        // .then((result=>{
-        //     result.json()
-        //     .then((resp=>{
-        //         setBooks(resp);
-        //     }))
-        // }))
-    }
-
-
-    function addNewBook(){
-        axios.post('http://localhost:8080/api/v1/book/', {
-            "title":title,
-            "isbn":isbn,
-            "pageNumber":pageNumber,
-            "publisher":publisher
-          })
-
-          getBooks();
-
-
-    }
+    const [id, setId] = useState(0);
+    const [authorId, setAuthorId] = useState(0);
 
 
     useEffect(() => {
@@ -53,6 +23,42 @@ const Books = () => {
     }, [])
 
 
+    function getBooks() {
+        axios.get("http://localhost:8080/api/v1/book/")
+            .then(res => {
+                const newBooks = res.data
+                setBooks(newBooks);
+            })
+    }
+
+
+    function addNewBook() {
+        axios.post('http://localhost:8080/api/v1/book/', {
+            "title": title,
+            "isbn": isbn,
+            "pageNumber": pageNumber,
+            "publisher": publisher
+        }).then(getBooks());
+
+    }
+
+    function updateBook(id) {
+
+        axios.put(`http://localhost:8080/api/v1/book/` + id + '/?' + 'isbn=' + isbn + '&' + 'title=' + title + '&' + 'pageNumber=' + pageNumber + '&' + 'publisher=' + publisher)
+            .then(res => {
+                //callback
+                getBooks();
+            })
+    }
+
+    function connectAuthor(bookId, authorId) {
+        axios.put(`http://localhost:8080/api/v1/book/` + bookId + '/author/' + authorId)
+            .then(res => {
+                //callback
+                getBooks();
+            })
+    }
+
     function deleteBook(id) {
 
         axios.delete("http://localhost:8080/api/v1/book/" + id)
@@ -61,10 +67,11 @@ const Books = () => {
     }
 
 
+
     return (
-        <div id="card" style={{}}>
+        <div id="card" style={{backgroundColor:'yellow'}}>
             <h1>Book List</h1>
-            <table border={3} style={{ fontSize: 10 }}>
+            <table border={3} style={{ fontSize: 10,  }}>
                 <tbody>
                     <tr>
                         <td >ID</td>
@@ -89,14 +96,15 @@ const Books = () => {
                                         </>
 
                                     })}
-                                </td>}
+                                    </td>}
 
-                            </td>
-                            <td>{item.isbn}</td>
-                            <td>{item.title}</td>
-                            <td>{item.publisher}</td>
-                            <td>{item.pageNumber}</td>
-                            <td><button onClick={()=>deleteBook(item.id)} style={{fontSize:10}}>Delete</button></td>
+                                </td>
+                                <td>{item.isbn}</td>
+                                <td>{item.title}</td>
+                                <td>{item.publisher}</td>
+                                <td>{item.pageNumber}</td>
+                                <td><button onClick={() => deleteBook(item.id)} style={{ fontSize: 10 }}>Delete</button></td>
+
                             </tr>
                         )
 
@@ -105,60 +113,41 @@ const Books = () => {
 
                 </tbody>
             </table>
-            
 
-            <div style={{display:'block', width:'210px',height:'130px'} }>
+            <div style={{ display: 'flex', flexDirection: 'row' ,gap:60,flexWrap:'wrap',flex:1}}>
+                <div style={{ display: 'flex', width: '120px', height: '50px',flexDirection:'column',flex:1}}>
 
-            <input  placeholder='add title' onChange={(e)=>setTitle(e.target.value) }></input>
-            <input placeholder='add isbn' onChange={(e)=>setIsbn(e.target.value)} ></input>
-            <input placeholder='add page number' onChange={(e)=>setPageNumber(e.target.value)}></input>
-            <input placeholder='add publisher' onChange={(e)=>setPublisher(e.target.value)}></input>
-            <button onClick={()=>addNewBook()}>post new book</button>
+                    <input placeholder='add title' onChange={(e) => setTitle(e.target.value)}></input>
+                    <input placeholder='add isbn' onChange={(e) => setIsbn(e.target.value)} ></input>
+                    <input placeholder='add page number' onChange={(e) => setPageNumber(e.target.value)}></input>
+                    <input placeholder='add publisher' onChange={(e) => setPublisher(e.target.value)}></input>
+                    <button onClick={() => addNewBook()}>post new book</button>
+                </div>
+
+                <div style={{ display: 'flex', width: '120px', height: '0px',flexDirection:'column',flex:1 }}>
+
+                    <input placeholder='id to be updated' onChange={(e) => setId(e.target.value)}></input>
+                    <input placeholder='update title' onChange={(e) => setTitle(e.target.value)}></input>
+                    <input placeholder='update isbn' onChange={(e) => setIsbn(e.target.value)} ></input>
+                    <input placeholder='update page number' onChange={(e) => setPageNumber(e.target.value)}></input>
+                    <input placeholder='update publisher' onChange={(e) => setPublisher(e.target.value)}></input>
+                    <button onClick={() => updateBook(id)}>update book</button>
+                </div>
+                <div style={{ display: 'flex', width: '80px', height: '50px',flexDirection:'column' ,flex:1 }}>
+
+                    <input placeholder='book id to be connected' onChange={(e) => setId(e.target.value)}></input>
+                    <input placeholder='author id to be connected' onChange={(e) => setAuthorId(e.target.value)}></input>
+                    <button onClick={() => connectAuthor(id, authorId)}>connect authors</button>
+                </div>
             </div>
         </div>
     )
 
 
-    // books.map((book, index) => {
-
-    //     return <>
-    //         <div id="card" style={{ width: '200px', marginLeft: 80, borderStyle: 'solid', borderColor: 'red' }}>
-    //             <h1 style={{ display: 'inline-block', color: 'blue', backgroundColor: 'orange' }}> Book id: {book.id}</h1>
-
-    //             <button style={{ fontSize: 10 }} onClick={() => deleteBook(book.id)}>Delete</button>
 
 
 
 
-
-    //             <h1 style={{ color: 'white', backgroundColor: 'purple' }}>Authors: {
-
-    //                 book.authors.length <= 0 ? <p1>No author info</p1> :
-
-    //                     book.authors.map((author, index) => {
-    //                         return <>
-    //                             <div style={{ display: 'flex', flex: 1, flexDirection: 'row', gap: 5 }}>
-    //                                 <p1 style={{ color: 'yellow', backgroundColor: 'blue' }}>{author.name}</p1>
-    //                                 <p1 style={{ color: 'yellow', backgroundColor: 'pink' }}>{author.surname},</p1>
-    //                             </div>
-    //                         </>
-
-    //                     })}
-
-
-    //             </h1>
-
-    //             <h1 style={{ color: 'blue' }}>Title: {book.title}</h1>
-    //             <h1 style={{ color: 'blue' }}>Publisher: {book.publisher}</h1>
-    //             <h1 style={{ color: 'blue' }}>pageNumber: {book.pageNumber}</h1>
-
-    //         </div>
-    //     </>
-
-    // })
-
-
-
-}
+}//eof books
 
 export default Books;

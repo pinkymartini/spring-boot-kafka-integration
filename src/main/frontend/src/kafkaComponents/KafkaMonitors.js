@@ -13,7 +13,7 @@ class KafkaMonitors extends React.Component{
     {
         return (
             
-        <div style={{display:'flex', flexDirection:'row',flexWrap:'wrap',flexShrink:3}}>
+        <div style={{display:'flex', flex:1,flexDirection:'row',flexWrap:'wrap',flexShrink:3,backgroundColor:'blue'}}>
         <KafkaDeletions></KafkaDeletions>
         <KafkaPosts></KafkaPosts>
         <KafkaReadings></KafkaReadings>
