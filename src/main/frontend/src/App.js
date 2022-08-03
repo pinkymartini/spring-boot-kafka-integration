@@ -17,9 +17,8 @@ function App() {
   return (
  
 
-  <div id = "app" style={{backgroundColor:'white', flex:1, fontSize:5,display:'flex',flexDirection:'row'}}>
+  <div id = "app" style={{backgroundColor:'white', flex:1, fontSize:5,display:'flex',flexDirection:'row' , gap:'50px'}}>
   <BookComponent ></BookComponent>
-  {/* <Books></Books> */}
   <AuthorComponent></AuthorComponent>
   <KafkaMonitors></KafkaMonitors>
   </div>

@@ -48,9 +48,9 @@ const Authors = () => {
     }
 
     return (
-        <div id="card" style={{backgroundColor:'red'}}>
-            <h1>Author List</h1>
-            <table border={2} style={{ fontSize: 10 }}>
+        <div id="card" style={{display:'flex',flexDirection:'column',flex:1}}>
+            <h1 style ={{color:'darkorange'}}>Author List</h1>
+            <table border={2} style={{ fontSize: 10, backgroundColor:'cyan'}}>
                 <tbody>
                     <tr>
                         <td >ID</td>
@@ -63,12 +63,10 @@ const Authors = () => {
                         authors.map((item, i) =>
                             <tr key={i}>
                                 <td>{item.id}</td>
-
-
                                 <td>{item.name}</td>
                                 <td>{item.surname}</td>
                                 <td>{item.dob}</td>
-                                <td><button onClick={() => deleteAuthor(item.id)}>Delete</button></td>
+                                <td><button style={{fontSize:10}} onClick={() => deleteAuthor(item.id)}>Delete</button></td>
                             </tr>
                         )
 
@@ -77,7 +75,7 @@ const Authors = () => {
 
                 </tbody>
             </table>
-            <div style={{ display: 'block', width: '210px', height: '130px' }}>
+            <div style={{ display: 'flex',flex:1,flexDirection:'column' }}>
 
                 <input placeholder='add name' onChange={(e) => setName(e.target.value)}></input>
                 <input placeholder='add surname' onChange={(e) => setSurname(e.target.value)} ></input>

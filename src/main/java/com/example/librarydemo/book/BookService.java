@@ -96,5 +96,36 @@ public class BookService {
         book.setIsbn(isbn);
 
     }
+    @Transactional
+    public void updateBook2(Long id, Book bookBody)
+    {
+        Book book = bookRepository.findById(id).orElseThrow(()-> new IllegalStateException(
+                "Book with ID " + id+ "does not exist."
+        ));
+
+        if(bookRepository.findById(id).isPresent())
+        {
+            if(bookBody.getIsbn()!= null)
+            {
+                book.setIsbn(bookBody.getIsbn());
+            }
+            if(bookBody.getTitle()!= null )
+            {
+                book.setTitle(bookBody.getTitle());
+            }
+            if(bookBody.getPageNumber()!= null)
+            {
+                book.setPageNumber(bookBody.getPageNumber());
+            }
+            if(bookBody.getPublisher()!= null)
+            {
+                book.setPublisher(bookBody.getPublisher());
+            }
+
+        }
+
+
+
+    }
 
 }

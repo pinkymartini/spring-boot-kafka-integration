@@ -1,7 +1,9 @@
 package com.example.librarydemo.book;
 
 
+import com.example.librarydemo.author.Author;
 import com.example.librarydemo.author.AuthorRepository;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -89,28 +91,44 @@ public class BookController {
         Book book = bookRepository.findById(bookId).orElseThrow(()-> new IllegalStateException(
                 "Book with id " + bookId+ "  does not exist."
         ));
-        kafkaTemplate.send("updates", "Book Updated: "+book);
+
+        Author author = authorRepository.findById(authorId).orElseThrow(()-> new IllegalStateException(
+                "Author with id " + authorId+ "  does not exist."
+        ));
+        kafkaTemplate.send("updates", "Book: "+book+ " Connected To Author: " + author);
 
     }//end of authorToBook() function
 
-    @PutMapping(path="{bookId}")
-    public void updateBook(
-            @PathVariable("bookId") Long bookId,
-            @RequestParam(required = false) Integer isbn,
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String publisher,
-            @RequestParam(required = false) Integer pageNumber
-    )
-    {
+//    @PutMapping(path="{bookId}")
+//    public void updateBook(
+//            @PathVariable("bookId") Long bookId,
+//            @RequestParam(required = false) Integer isbn,
+//            @RequestParam(required = false) String title,
+//            @RequestParam(required = false) String publisher,
+//            @RequestParam(required = false) Integer pageNumber
+//    )
+//    {
+//
+//       bookService.updateBook(bookId, isbn, title, publisher, pageNumber);
+//        Book book = bookRepository.findById(bookId).orElseThrow(()-> new IllegalStateException(
+//                "Book with id " + bookId+ "  does not exist."
+//        ));
+//
+//        kafkaTemplate.send("updates", "Book Updated: "+book);
+//        System.out.println("updated");
+//    }//end of updatebook() function
 
-       bookService.updateBook(bookId, isbn, title, publisher, pageNumber);
-        Book book = bookRepository.findById(bookId).orElseThrow(()-> new IllegalStateException(
+    @PutMapping(path="{bookId}")/////////////////////////////////////////////////////////
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public void updateBookBody(@RequestBody Book book,@PathVariable Long bookId )
+    {
+        bookService.updateBook2(bookId, book);
+                Book tempbook = bookRepository.findById(bookId).orElseThrow(()-> new IllegalStateException(
                 "Book with id " + bookId+ "  does not exist."
         ));
+        kafkaTemplate.send("updates", "Book Updated: "+tempbook);
 
-        kafkaTemplate.send("updates", "Book Updated: "+book);
-        System.out.println("updated");
-    }//end of updatebook() function
+    }
 
 
     @Bean

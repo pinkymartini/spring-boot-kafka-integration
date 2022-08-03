@@ -21,8 +21,8 @@ const KafkaPosts =()=>{
         }
 
         return(
-            <div><h1>topic: 'posts'</h1>
-            <div style={{ width: '120px', height:'120px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll'}}>
+            <div style={{}}><h1>Topic: 'posts'</h1>
+            <div style={{ width: '200px', height:'100px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll'}}>
                 {messages.map(message=><h1>{message}</h1>)}
 
             </div>
