@@ -20,8 +20,6 @@ const Books = () => {
     useEffect(() => {
 
         getBooks();
- 
-
     }, [])
 
 
@@ -29,7 +27,7 @@ const Books = () => {
         axios.get("http://localhost:8080/api/v1/book/")
             .then(res => {
                 const newBooks = res.data
-                setBooks(newBooks);
+                setBooks([...newBooks]);
             })
     }
 
@@ -40,12 +38,14 @@ const Books = () => {
             "isbn": isbn,
             "pageNumber": pageNumber,
             "publisher": publisher
-        }).then(getBooks());
+        })
+        .then(res => {
+           getBooks()
+        })
+        
+       
+        
 
-        // setTitle("");
-        // setIsbn("");
-        // setPageNumber("");
-        // setPublisher("");
 
     }
 
@@ -68,24 +68,30 @@ const Books = () => {
                     "publisher": publisher
 
                 })
-            
-                
-                getBooks();
+                .then(res => {
+                    getBooks()
+                 })       
             
     }
 
     function connectAuthor(bookId, authorId) {
         axios.put(`http://localhost:8080/api/v1/book/` + bookId + '/author/' + authorId)
+        .then(res => {
+            getBooks()
+         })
             
-                getBooks();
+                //getBooks();
             
     }
 
     function deleteBook(id) {
 
         axios.delete("http://localhost:8080/api/v1/book/" + id)
+        .then(res => {
+            getBooks()
+         })
         
-        getBooks();
+        //getBooks();
 
     }
 

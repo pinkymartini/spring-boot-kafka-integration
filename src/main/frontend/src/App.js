@@ -17,7 +17,7 @@ function App() {
   return (
  
 
-  <div id = "app" style={{backgroundColor:'white', flex:1, fontSize:5,display:'flex',flexDirection:'row' , gap:'50px'}}>
+  <div id = "app" style={{paddingLeft:40,backgroundColor:'white', flex:1, fontSize:5,display:'flex',flexDirection:'row' , gap:'50px'}}>
   <BookComponent ></BookComponent>
   <AuthorComponent></AuthorComponent>
   <KafkaMonitors></KafkaMonitors>

@@ -23,10 +23,12 @@ public class KafkaListeners {
     private ArrayList<Object> updateLogs = new ArrayList<>();
 
 
+
+
     @KafkaListener(
             topics="readings",
             groupId = "groupId"
-//            ,topicPartitions =
+//           ,topicPartitions =
 //                    { @TopicPartition(topic = "readings",
 //                            partitionOffsets = @PartitionOffset(partition = "0", initialOffset = "0"))}
     )

@@ -12,7 +12,7 @@ const KafkaReadings =()=>{
         axios.get("http://localhost:8080/api/v1/readings/")
         .then(res=>{
       
-        setMessages(res.data);
+        setMessages([...res.data]);
         })
         }, [messages])
 
@@ -21,7 +21,7 @@ const KafkaReadings =()=>{
         }
 
         return(
-            <div style={{}}><h1>Topic: 'readings'</h1>
+            <div style={{}}><h1 style={{color:'goldenrod'}}>Topic: 'readings'</h1>
             <div style={{ width: '200px', height:'100px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll'}}>
                 {messages.map(message=><h1>{message}</h1>)}
 

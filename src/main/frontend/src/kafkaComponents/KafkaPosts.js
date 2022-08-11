@@ -12,7 +12,7 @@ const KafkaPosts =()=>{
         axios.get("http://localhost:8080/api/v1/posts/")
         .then(res=>{
       
-        setMessages(res.data);
+        setMessages([...res.data]);
         })
         }, [messages])
 
@@ -21,7 +21,7 @@ const KafkaPosts =()=>{
         }
 
         return(
-            <div style={{}}><h1>Topic: 'posts'</h1>
+            <div style={{}}><h1 style={{color:'indigo'}}>Topic: 'posts'</h1>
             <div style={{ width: '200px', height:'100px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll'}}>
                 {messages.map(message=><h1>{message}</h1>)}
 

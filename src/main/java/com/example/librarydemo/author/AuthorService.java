@@ -26,12 +26,12 @@ public class AuthorService {
     public void addAuthor(Author author)
     {
 
-        Optional<Author> tempAuthor = authorRepository.findAuthorByName(author.getName());
-
-        if(tempAuthor.isPresent())
-        {
-            throw new IllegalStateException("Author is existent");
-        }
+//        Optional<Author> tempAuthor = authorRepository.findAuthorByName(author.getName());
+//
+//        if(tempAuthor.isPresent())
+//        {
+//            throw new IllegalStateException("Author is existent");
+//        }
 
         authorRepository.save(author);
 

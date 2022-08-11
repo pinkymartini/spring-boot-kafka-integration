@@ -1,4 +1,5 @@
 import React from "react";
+import KafkaAll from "./KafkaAll";
 import KafkaDeletions from "./KafkaDeletions";
 import KafkaPosts from "./KafkaPosts";
 import KafkaReadings from "./KafkaReadings";
@@ -14,14 +15,14 @@ class KafkaMonitors extends React.Component{
         return (
 
         <div style={{display:'flex', flex:1,flexDirection:'column',}}>
-        <h1 style={{color:'blueviolet'}}>Kafka Monitors</h1>
+        <h1 style={{color:'blueviolet'}}>Kafka Monitor</h1>
         <div style={{display:'flex', flex:1,flexDirection:'row',flexWrap:'wrap',justifyContent:'flex-start', alignContent:'flex-start',fontSize:5}}>
          
-          
-        <KafkaDeletions></KafkaDeletions>
+        <KafkaAll></KafkaAll>
+        {/* <KafkaDeletions></KafkaDeletions>
         <KafkaPosts></KafkaPosts>
         <KafkaReadings></KafkaReadings>
-        <KafkaUpdates></KafkaUpdates>
+        <KafkaUpdates></KafkaUpdates> */}
         
         </div>
         </div>

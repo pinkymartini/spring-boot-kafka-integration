@@ -1,31 +1,43 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { render } from '@testing-library/react';
+
+
 
 
 const KafkaDeletions =()=>{
 
     const [messages, setMessages] = useState([])
 
+
     useEffect(() => {
+
 
         axios.get("http://localhost:8080/api/v1/deletions/")
         .then(res=>{
-      
-        setMessages(res.data);
+
+            const newMessages = res.data
+            
+        setMessages([...newMessages]);
         })
+        
         }, [messages])
 
-        const up = ()=>{
-            this.forceUpdate();
-        }
+       
 
+   
         return(
-            <div style={{}}><h1>Topic: 'deletions'</h1>
-            <div style={{ width: '200px', height:'100px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll'}}>
-                {messages.map(message=><h1>{message}</h1>)}
+            <div  style={{}}><h1 style={{color:'steelblue'}}>Topic: 'deletions'</h1>
+            <div     style={{ width: '200px', height:'100px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll'}}>
+                {messages.map(message=><h1>{message}</h1>)
+                
+                }
+
 
             </div>
+            
+            
+           
             </div>
 
 

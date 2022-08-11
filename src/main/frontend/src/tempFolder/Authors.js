@@ -32,18 +32,25 @@ const Authors = () => {
         axios.get("http://localhost:8080/api/v1/author/")
             .then(res => {
 
-                setAuthors(res.data);
+                getAuthors();
             })
     }
 
     function addNewAuthor() {
+
+
+
         axios.post('http://localhost:8080/api/v1/author/', {
             "name": name,
             "surname": surname,
             "dob": dob,
         })
+        .then(res => {
+           
+            getAuthors();
+        })
 
-        getAuthors();
+        
 
     }
 
@@ -52,7 +59,7 @@ const Authors = () => {
             <h1 style ={{color:'darkorange'}}>Author List</h1>
             <table border={2} style={{ fontSize: 10, backgroundColor:'cyan'}}>
                 <tbody>
-                    <tr>
+                    <tr style={{fontWeight:'bold', color:'orange'}}>
                         <td >ID</td>
                         <td>Name</td>
                         <td>Surname</td>
