@@ -7,6 +7,7 @@ import AuthorComponent from './tempFolder/AuthorComponent';
 import DeletionComponent from './kafkaComponents/KafkaMonitors';
 import KafkaDeletions from './kafkaComponents/KafkaDeletions';
 import KafkaMonitors from './kafkaComponents/KafkaMonitors';
+import BookSeller from './tempFolder/BookSeller';
 
 
 
@@ -21,6 +22,7 @@ function App() {
   <BookComponent ></BookComponent>
   <AuthorComponent></AuthorComponent>
   <KafkaMonitors></KafkaMonitors>
+  <BookSeller></BookSeller>
   </div>
   
   );

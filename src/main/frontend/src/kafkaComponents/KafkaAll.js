@@ -13,8 +13,9 @@ const KafkaAll =()=>{
 
     const [messages, setMessages] = useState([])
     const [chosenTopic,setChosenTopic] = useState('deletions')
-    // const options =[
-    //     'readings','updates','deletions','posts']
+    const [offset,setOffset] = useState(0)
+
+
     const options =[
         {value:'readings', label:'Readings'},
         {value:'updates', label:'Updates'},
@@ -27,9 +28,6 @@ const KafkaAll =()=>{
         option: (styles) =>({...styles, fontSize:10})
     }
 
-    function changeTopic (string){
-        setChosenTopic(string)
-    }
 
     function getTopics()
     {
@@ -43,19 +41,31 @@ const KafkaAll =()=>{
         
     }
 
+    function getTopicsbyOffset()
+    {
+        axios.get("http://localhost:8080/api/v1/"+chosenTopic+"/"+offset)
+        .then(res=>{
+
+            const newMessages = res.data
+            
+            setMessages([...newMessages]);
+        })
+        
+    }
+
     useEffect(() => {
-        getTopics();
+        // getTopics();
+        getTopicsbyOffset();
     }, [messages])
     
 
         return(
-            <div  style={{fontSize:5}}><h1 style={{color:'steelblue'}}>Topicss'</h1>
-
-             {/* <ReactDropdown  options={options} onChange={e=> setChosenTopic(e.value)} > </ReactDropdown> */}
-
-             <Select   options={options} onChange={e=> setChosenTopic(e.value)} styles={fontStyles}></Select>
+            <div  style={{fontSize:5}}>
+            <h1 style={{color:'steelblue'}}>{chosenTopic} Total Messages: {messages.length}</h1>
+            <h1 style={{color:'red'}}>Select a Topic & Offset Value</h1>
+            <input placeholder='(optional) set an offset value' onChange={(e) => setOffset(e.target.value)}></input>
             
-
+            <Select   options={options} onChange={e=> setChosenTopic(e.value)} styles={fontStyles}></Select>
            
             <div     style={{ width: '200px', height:'600px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll'}}>
                 

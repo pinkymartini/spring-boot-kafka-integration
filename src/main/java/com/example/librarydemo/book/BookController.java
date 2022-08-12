@@ -36,6 +36,8 @@ public class BookController {
 
     }
 
+
+    //CHANGE THIS.
     //we get the booklist, then send booklist with kafka.
     @GetMapping
     public List<Book> getBooks()

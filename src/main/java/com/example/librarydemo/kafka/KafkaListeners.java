@@ -22,6 +22,8 @@ public class KafkaListeners {
     private ArrayList<Object> postLogs = new ArrayList<>();
     private ArrayList<Object> updateLogs = new ArrayList<>();
 
+//    private ArrayList<Object> booksSoldLogs = new ArrayList<>();
+
 
 
 
@@ -79,6 +81,19 @@ public class KafkaListeners {
         updateLogs.add(data);
     }
 
+//    @KafkaListener(
+//            topics="books-sold",
+//            groupId = "groupId",
+//            topicPartitions =
+//                    { @TopicPartition(topic = "books-sold",
+//                            partitionOffsets = @PartitionOffset(partition = "0", initialOffset = "0"))}
+//    )
+//    public void booksSoldListener(String data){
+//        System.out.println("Sold Books Listener Recieved: "+ data);
+//
+//        booksSoldLogs.add(data);
+//    }
+
 
     //getters for logs.
     public ArrayList<Object> getReadingLogs(){
@@ -93,4 +108,8 @@ public class KafkaListeners {
     public ArrayList<Object> getUpdateLogs(){
         return updateLogs;
     }
+
+//    public ArrayList<Object> getBooksSoldLogs(){
+//        return booksSoldLogs;
+//    }
 }

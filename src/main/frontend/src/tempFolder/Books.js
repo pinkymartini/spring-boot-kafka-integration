@@ -37,7 +37,8 @@ const Books = () => {
             "title": title,
             "isbn": isbn,
             "pageNumber": pageNumber,
-            "publisher": publisher
+            "publisher": publisher,
+            "pageNumber": pageNumber,
         })
         .then(res => {
            getBooks()
@@ -98,9 +99,10 @@ const Books = () => {
 
 
     return (
-        <div id="card" style={{display:'flex',flexDirection:'column',flex:1.5,}}>
+        //table'a height or div'e flex value ikisinden biri ancak. yada display
+        <div id="card" style={{display:'block',flexDirection:'column'}}>
             <h1 style={{fontWeight:'bold',color:'red'}}>Book List</h1>
-            <table border={3} style={{ fontSize: 10, backgroundColor:'wheat'}}>
+            <table border={4} style={{ fontSize:10, backgroundColor:'wheat',height:'10px', overflowY:'scroll'}}>
                 <tbody>
                     <tr style={{fontWeight:'bold', color:'blue'}}>
                         <td >ID</td>

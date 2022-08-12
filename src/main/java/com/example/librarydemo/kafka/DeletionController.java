@@ -1,12 +1,16 @@
 package com.example.librarydemo.kafka;
 
+import com.example.librarydemo.book.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 @RestController
@@ -38,6 +42,14 @@ public class DeletionController {
     {
         return kafkaListeners.getDeletionLogs();
 
+    }
+
+    @GetMapping(path = {"{offset}"})
+    public List<Object> getDeletionsByOffset(@PathVariable("offset" )int offset)
+    {
+        List<Object> tempArray = kafkaListeners.getDeletionLogs();
+        tempArray=  tempArray.subList(offset, tempArray.size());
+        return tempArray;
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 @RestController
@@ -34,10 +35,17 @@ public class UpdateController {
 //    }
 
     @GetMapping
-    public ArrayList<Object> getDeletionLogs()
+    public ArrayList<Object> getUpdateLogs()
     {
         return kafkaListeners.getUpdateLogs();
 
+    }
+    @GetMapping(path = {"{offset}"})
+    public List<Object> getUpdatesByOffset(@PathVariable("offset" )int offset)
+    {
+        List<Object> tempArray = kafkaListeners.getUpdateLogs();
+        tempArray=  tempArray.subList(offset, tempArray.size());
+        return tempArray;
     }
 
 

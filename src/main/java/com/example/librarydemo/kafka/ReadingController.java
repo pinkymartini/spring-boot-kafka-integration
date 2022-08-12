@@ -5,6 +5,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/readings")
@@ -36,6 +37,13 @@ public class ReadingController {
     {
         return kafkaListeners.getReadingLogs();
 
+    }
+    @GetMapping(path = {"{offset}"})
+    public List<Object> getReadingsByOffset(@PathVariable("offset" )int offset)
+    {
+        List<Object> tempArray = kafkaListeners.getReadingLogs();
+        tempArray=  tempArray.subList(offset, tempArray.size());
+        return tempArray;
     }
 
 

@@ -30,6 +30,12 @@ public class KafkaTopicConfig {
 
     }
 
+    @Bean //gets instantiated runs.
+    public NewTopic soldBooksEvents(){
+        return TopicBuilder.name("books-sold").build();
+
+    }
+
 
 
 }
