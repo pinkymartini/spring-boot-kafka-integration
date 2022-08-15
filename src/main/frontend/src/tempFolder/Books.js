@@ -5,6 +5,7 @@ import KafkaDeletions from '../kafkaComponents/KafkaDeletions';
 
 const Books = () => {
     const [books, setBooks] = useState([]);
+    const [book, setBook] = useState({});
 
     //new book names
     const [title, setTitle] = useState(null);
@@ -14,6 +15,9 @@ const Books = () => {
     const [id, setId] = useState(null);
     const [authorId, setAuthorId] = useState(0);
 
+    var [money, setMoney] = useState(0);
+    const [quantity, setQuantity] = useState(0);
+
 
 
 
@@ -22,6 +26,11 @@ const Books = () => {
         getBooks();
     }, [])
 
+    useEffect(() => {
+
+        getBook();
+    }, [id])
+
 
     function getBooks() {
         axios.get("http://localhost:8080/api/v1/book/")
@@ -29,6 +38,16 @@ const Books = () => {
                 const newBooks = res.data
                 setBooks([...newBooks]);
             })
+    }
+
+    function getBook()
+    {
+        axios.get(`http://localhost:8080/api/v1/book/` + id,
+        {
+        })
+        .then(res => {
+           setBook(res.data)
+         })
     }
 
 
@@ -44,10 +63,6 @@ const Books = () => {
            getBooks()
         })
         
-       
-        
-
-
     }
 
     // function updateBook(id) {
@@ -73,6 +88,23 @@ const Books = () => {
                     getBooks()
                  })       
             
+    }
+
+    function sellBook(id)
+    {
+          axios.put(`http://localhost:8080/api/v1/book/` + id+"/sold",
+          {
+              "quantity":quantity
+              
+          })
+          .then(res => {
+            getBooks();
+            
+              setMoney(money+=quantity*book.price)
+              console.log(book.price)
+              console.log(quantity)
+            
+           })     
     }
 
     function connectAuthor(bookId, authorId) {
@@ -111,6 +143,8 @@ const Books = () => {
                         <td>Title</td>
                         <td>Publisher</td>
                         <td>Page Number</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
                         <td>Delete?</td>
                     </tr>
                     {
@@ -134,6 +168,8 @@ const Books = () => {
                                 <td>{item.title}</td>
                                 <td>{item.publisher}</td>
                                 <td>{item.pageNumber}</td>
+                                <td>{item.price}</td>
+                                <td>{item.quantity}</td>
                                 <td><button onClick={() => deleteBook(item.id)} style={{ fontSize: 10 }}>Delete</button></td>
 
                             </tr>
@@ -170,6 +206,15 @@ const Books = () => {
                     <input placeholder='book id to be connected' onChange={(e) => setId(e.target.value)}></input>
                     <input placeholder='author id to be connected' onChange={(e) => setAuthorId(e.target.value)}></input>
                     <button onClick={() => connectAuthor(id, authorId)}>connect authors</button>
+                </div>
+
+                <div style={{ display:'grid' ,flex:1, backgroundColor:'green'}}>
+
+
+                <input placeholder='book id to sell' onChange={(e) => setId(e.target.value)}></input>
+                <input placeholder='amount?' onChange={(e) => setQuantity(e.target.value)}></input>
+                <button onClick={() => sellBook(id)}>Make a Sale</button>
+                <h1 style={{fontSize:15}}>Money Earned: {money}</h1>
                 </div>
             </div>
         </div>

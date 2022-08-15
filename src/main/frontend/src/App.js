@@ -22,7 +22,7 @@ function App() {
   <BookComponent ></BookComponent>
   <AuthorComponent></AuthorComponent>
   <KafkaMonitors></KafkaMonitors>
-  <BookSeller></BookSeller>
+  {/* <BookSeller></BookSeller> */}
   </div>
   
   );

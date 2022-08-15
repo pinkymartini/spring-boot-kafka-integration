@@ -44,11 +44,11 @@ public class BookController {
     {
         List<Book> bookList = bookService.getBooks();
 
-        for (Book book : bookList
-             ) {
-                    kafkaTemplate.send("readings", "Book Received: " + book);
-                    //kafkaTemplate.send("readings", book.getClass().getSimpleName()+ " Recieved: " + book);
-        }
+//        for (Book book : bookList
+//             ) {
+//                    kafkaTemplate.send("readings", "Book Received: " + book);
+//                    //kafkaTemplate.send("readings", book.getClass().getSimpleName()+ " Recieved: " + book);
+//        }
         return bookService.getBooks();
     }
 
@@ -132,15 +132,27 @@ public class BookController {
 
     }
 
-
-    @Bean
-    CommandLineRunner temp(KafkaTemplate<String, Object> kafkaTemplate)
+    @PutMapping(path="{bookId}/sold")/////////////////////////////////////////////////////////
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public void sellBook(@RequestBody Book book,@PathVariable Long bookId )
     {
-        return args -> {
-          kafkaTemplate.send("readings", "hello kafka");
+        bookService.sellBook(bookId, book);
+        Book tempbook = bookRepository.findById(bookId).orElseThrow(()-> new IllegalStateException(
+                "Book with id " + bookId+ "  does not exist."
+        ));
+        kafkaTemplate.send("books-sold", "The Book : "+ tempbook.getTitle()+ " was sold for "+ (double)book.getQuantity()*tempbook.getPrice() + " dollars");
 
-        };
     }
+
+
+//    @Bean
+//    CommandLineRunner temp(KafkaTemplate<String, Object> kafkaTemplate)
+//    {
+//        return args -> {
+//          kafkaTemplate.send("readings", "hello kafka");
+//
+//        };
+//    }
 
 
 

@@ -17,10 +17,11 @@ const KafkaAll =()=>{
 
 
     const options =[
-        {value:'readings', label:'Readings'},
+        // {value:'readings', label:'Readings'},
         {value:'updates', label:'Updates'},
         {value:'deletions', label:'Deletions'},
         {value:'posts', label:'Posts'},
+        {value:'books-sold', label:'Books Sold'},
     ]
 
     const fontStyles={

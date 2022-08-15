@@ -37,12 +37,16 @@ public class Book {
     private String publisher;
     private Integer pageNumber;
 
+    private Integer quantity;
+
+    private Double price;
+
     public Book()
     {
 
     }//end of constructor.
 
-    public Book(Long id, Integer isbn, String title, String publisher, Integer pageNumber) {
+    public Book(Long id, Integer isbn, String title, String publisher, Integer pageNumber, Integer quantity, Double price) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -50,14 +54,19 @@ public class Book {
         this.publisher = publisher;
         this.pageNumber = pageNumber;
 
+        this.quantity=quantity;
+        this.price= price;
+
     }//end of constructor
 
     //constructor without id. (will be used to send post requests.)
-    public Book(Integer isbn, String title, String publisher, Integer pageNumber) {
+    public Book(Integer isbn, String title, String publisher, Integer pageNumber,Integer quantity, Double price) {
         this.isbn = isbn;
         this.title = title;
         this.publisher = publisher;
         this.pageNumber = pageNumber;
+        this.quantity=quantity;
+        this.price= price;
 
     }//end of constructor without id.
 
@@ -101,6 +110,22 @@ public class Book {
 
     public void setPageNumber(Integer pageNumber) {
         this.pageNumber = pageNumber;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Collection<Author> getAuthors() {

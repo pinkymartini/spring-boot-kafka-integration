@@ -22,23 +22,23 @@ public class KafkaListeners {
     private ArrayList<Object> postLogs = new ArrayList<>();
     private ArrayList<Object> updateLogs = new ArrayList<>();
 
-//    private ArrayList<Object> booksSoldLogs = new ArrayList<>();
+    private ArrayList<Object> booksSoldLogs = new ArrayList<>();
 
 
 
 
-    @KafkaListener(
-            topics="readings",
-            groupId = "groupId"
-//           ,topicPartitions =
-//                    { @TopicPartition(topic = "readings",
-//                            partitionOffsets = @PartitionOffset(partition = "0", initialOffset = "0"))}
-    )
-    public void listener(String data){
-        //System.out.println("Reading listener received: "+ data);
-
-        readingLogs.add(data);
-    }
+//    @KafkaListener(
+//            topics="readings",
+//            groupId = "groupId"
+////           ,topicPartitions =
+////                    { @TopicPartition(topic = "readings",
+////                            partitionOffsets = @PartitionOffset(partition = "0", initialOffset = "0"))}
+//    )
+//    public void listener(String data){
+//        //System.out.println("Reading listener received: "+ data);
+//
+//        readingLogs.add(data);
+//    }
 
     @KafkaListener(
             topics="deletions",
@@ -81,18 +81,18 @@ public class KafkaListeners {
         updateLogs.add(data);
     }
 
-//    @KafkaListener(
-//            topics="books-sold",
-//            groupId = "groupId",
-//            topicPartitions =
-//                    { @TopicPartition(topic = "books-sold",
-//                            partitionOffsets = @PartitionOffset(partition = "0", initialOffset = "0"))}
-//    )
-//    public void booksSoldListener(String data){
-//        System.out.println("Sold Books Listener Recieved: "+ data);
-//
-//        booksSoldLogs.add(data);
-//    }
+    @KafkaListener(
+            topics="books-sold",
+            groupId = "groupId",
+            topicPartitions =
+                    { @TopicPartition(topic = "books-sold",
+                            partitionOffsets = @PartitionOffset(partition = "0", initialOffset = "0"))}
+    )
+    public void booksSoldListener(String data){
+        System.out.println("Sold Books Listener Recieved: "+ data);
+
+        booksSoldLogs.add(data);
+    }
 
 
     //getters for logs.
@@ -109,7 +109,7 @@ public class KafkaListeners {
         return updateLogs;
     }
 
-//    public ArrayList<Object> getBooksSoldLogs(){
-//        return booksSoldLogs;
-//    }
+    public ArrayList<Object> getBooksSoldLogs(){
+        return booksSoldLogs;
+    }
 }

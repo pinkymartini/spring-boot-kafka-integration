@@ -128,4 +128,25 @@ public class BookService {
 
     }
 
+    @Transactional
+    public void sellBook(Long bookId, Book bookBody) {
+
+        Book book = bookRepository.findById(bookId).orElseThrow(()-> new IllegalStateException(
+                "Book with ID " + bookId+ "does not exist."
+        ));
+
+        if(bookRepository.findById(bookId).isPresent())
+        {
+            if(bookBody.getQuantity()<=book.getQuantity())
+            {
+                book.setQuantity(book.getQuantity()-bookBody.getQuantity());
+            }
+            else throw new RuntimeException("not enough book.");
+
+
+        }
+
+
+
+    }
 }

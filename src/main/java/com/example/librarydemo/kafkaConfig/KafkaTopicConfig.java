@@ -9,11 +9,11 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
 
-    @Bean //gets instantiated runs.
-    public NewTopic events(){
-        return TopicBuilder.name("readings").build();
-
-    }
+//    @Bean //gets instantiated runs.
+//    public NewTopic events(){
+//        return TopicBuilder.name("readings").build();
+//
+//    }
     @Bean //gets instantiated runs.
     public NewTopic deletionEvents(){
         return TopicBuilder.name("deletions").build();

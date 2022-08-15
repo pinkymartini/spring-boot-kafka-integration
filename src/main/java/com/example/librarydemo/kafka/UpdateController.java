@@ -28,12 +28,6 @@ public class UpdateController {
 
     }
 
-//    @PostMapping
-//    public void publish(@RequestBody MessageRequest request)
-//    {
-//        kafkaTemplate.send("deletions", request.message());
-//    }
-
     @GetMapping
     public ArrayList<Object> getUpdateLogs()
     {
