@@ -14,9 +14,9 @@ class KafkaMonitors extends React.Component{
     {
         return (
 
-        <div style={{display:'flex', flex:1,flexDirection:'column',}}>
+        <div style={{display:'flex', flex:1,flexDirection:'column', }}>
         <h1 style={{color:'blueviolet'}}>Kafka Monitor</h1>
-        <div style={{display:'flex', flex:1,flexDirection:'row',flexWrap:'wrap',justifyContent:'flex-start', alignContent:'flex-start',fontSize:5}}>
+        <div style={{display:'flex', flex:1,fontSize:5}}>
          
         <KafkaAll></KafkaAll>
         {/* <KafkaDeletions></KafkaDeletions>

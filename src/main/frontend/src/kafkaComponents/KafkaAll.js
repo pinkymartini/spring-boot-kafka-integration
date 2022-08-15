@@ -76,7 +76,7 @@ const KafkaAll =()=>{
             
             <Select   options={options} onChange={e=> setChosenTopic(e.value)} styles={fontStyles}></Select>
            
-            <div     style={{ width: '200px', height:'600px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll'}}>
+            <div     style={{ width: '200px', height:'300px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll', borderRadius:4}}>
                 
                 {messages.map(message=><h1>{message}</h1>)
                 
