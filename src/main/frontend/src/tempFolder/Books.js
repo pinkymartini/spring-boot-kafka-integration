@@ -1,6 +1,10 @@
 import React, { Component, useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import KafkaDeletions from '../kafkaComponents/KafkaDeletions';
+import { Button, Chip, TextField } from '@mui/material';
+
+
+
 
 
 const Books = () => {
@@ -65,14 +69,6 @@ const Books = () => {
         
     }
 
-    // function updateBook(id) {
-
-    //     axios.put(`http://localhost:8080/api/v1/book/` + id + '/?' + 'isbn=' + isbn + '&' + 'title=' + title + '&' + 'pageNumber=' + pageNumber + '&' + 'publisher=' + publisher)
-            
-                
-    //             getBooks();
-            
-    // }
 
     function updateBook(id) {
 
@@ -132,7 +128,7 @@ const Books = () => {
 
     return (
         //table'a height or div'e flex value ikisinden biri ancak. yada display
-        <div id="card" style={{display:'block',flexDirection:'column'}}>
+        <div id="card" style={{display:'flex',flexDirection:'column' ,flex:2}}>
             <h1 style={{fontWeight:'bold',color:'red'}}>Book List</h1>
             <table border={4} style={{ fontSize:10, backgroundColor:'wheat',height:'10px', overflowY:'scroll'}}>
                 <tbody>
@@ -170,7 +166,7 @@ const Books = () => {
                                 <td>{item.pageNumber}</td>
                                 <td>{item.price}</td>
                                 <td>{item.quantity}</td>
-                                <td><button onClick={() => deleteBook(item.id)} style={{ fontSize: 10 }}>Delete</button></td>
+                                <td><Button size='small' variant="contained" onClick={() => deleteBook(item.id)} style={{ fontSize: 8 }}>Delete</Button></td>
 
                             </tr>
                         )
@@ -189,7 +185,7 @@ const Books = () => {
                     <input placeholder='add isbn' value={isbn == '' ? isbn:null} onChange={(e) => setIsbn(e.target.value)} ></input>
                     <input placeholder='add page number' value={pageNumber== '' ? pageNumber:null} onChange={(e) => setPageNumber(e.target.value)}></input>
                     <input placeholder='add publisher' value={publisher== '' ? publisher:null} onChange={(e) => setPublisher(e.target.value)}></input>
-                    <button onClick={() => addNewBook() }>post new book</button>
+                    <Button variant="contained" onClick={() => addNewBook() }>post new book</Button>
                 </div>
 
                 <div style={{ display:'grid' ,flex:1 }}>
@@ -199,22 +195,22 @@ const Books = () => {
                     <input placeholder='update isbn' onChange={(e) => setIsbn(e.target.value)} ></input>
                     <input placeholder='update page number' onChange={(e) => setPageNumber(e.target.value)}></input>
                     <input placeholder='update publisher' onChange={(e) => setPublisher(e.target.value)}></input>
-                    <button onClick={() => updateBook(id)}>update book</button>
+                    <Button variant="contained" onClick={() => updateBook(id)}>update book</Button>
                 </div>
                 <div style={{ display:'grid' ,flex:1}}>
 
                     <input placeholder='book id to be connected' onChange={(e) => setId(e.target.value)}></input>
                     <input placeholder='author id to be connected' onChange={(e) => setAuthorId(e.target.value)}></input>
-                    <button onClick={() => connectAuthor(id, authorId)}>connect authors</button>
+                    <Button variant="contained"  onClick={() => connectAuthor(id, authorId)}>connect authors</Button>
                 </div>
 
-                <div style={{ display:'grid' ,flex:1, backgroundColor:'green'}}>
+                <div style={{ display:'grid' ,flex:1}}>
 
 
                 <input placeholder='book id to sell' onChange={(e) => setId(e.target.value)}></input>
-                <input placeholder='amount?' onChange={(e) => setQuantity(e.target.value)}></input>
-                <button onClick={() => sellBook(id)}>Make a Sale</button>
-                <h1 style={{fontSize:15}}>Money Earned: {money}</h1>
+                <input style={{}} placeholder='amount?' onChange={(e) => setQuantity(e.target.value)}></input>
+                <Button style={{backgroundColor:'pink'}} variant="text" onClick={() => sellBook(id)}>Make a Sale</Button>
+                <Chip label= {<div>money earned this session: {money} dollars</div>}></Chip>
                 </div>
             </div>
         </div>

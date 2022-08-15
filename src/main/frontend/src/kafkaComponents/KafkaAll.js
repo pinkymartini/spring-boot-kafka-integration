@@ -5,7 +5,7 @@ import ReactDropdown from 'react-dropdown';
 import Dropdown from 'react-dropdown';
 import Select from 'react-select'
 import 'react-dropdown/style.css'
-
+import { Slider } from '@mui/material';
 
 
 
@@ -63,8 +63,16 @@ const KafkaAll =()=>{
         return(
             <div  style={{fontSize:5}}>
             <h1 style={{color:'steelblue'}}>{chosenTopic} Total Messages: {messages.length}</h1>
-            <h1 style={{color:'red'}}>Select a Topic & Offset Value</h1>
-            <input placeholder='(optional) set an offset value' onChange={(e) => setOffset(e.target.value)}></input>
+            <h1 style={{color:'red'}}>Select a Topic & Set an Offset Value</h1>
+                <Slider 
+                    size="small"
+                    defaultValue={70}
+                    valueLabelDisplay="auto"
+                    min={0}
+                    max={messages.length+offset-1}
+                    onChange={(e) => setOffset(e.target.value)}
+                />
+            {/* <input placeholder='(optional) set an offset value' onChange={(e) => setOffset(e.target.value)}></input> */}
             
             <Select   options={options} onChange={e=> setChosenTopic(e.value)} styles={fontStyles}></Select>
            

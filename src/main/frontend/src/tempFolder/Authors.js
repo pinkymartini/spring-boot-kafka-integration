@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { Button, Chip, TextField } from '@mui/material';
 
 const Authors = () => {
 
@@ -29,7 +29,6 @@ const Authors = () => {
 
     function deleteAuthor(id) {
         axios.delete("http://localhost:8080/api/v1/author/" + id)
-        axios.get("http://localhost:8080/api/v1/author/")
             .then(res => {
 
                 getAuthors();
@@ -73,7 +72,7 @@ const Authors = () => {
                                 <td>{item.name}</td>
                                 <td>{item.surname}</td>
                                 <td>{item.dob}</td>
-                                <td><button style={{fontSize:10}} onClick={() => deleteAuthor(item.id)}>Delete</button></td>
+                                <td><Button size='small' variant="contained" style={{fontSize:8}} onClick={() => deleteAuthor(item.id)}>Delete</Button></td>
                             </tr>
                         )
 
@@ -87,7 +86,7 @@ const Authors = () => {
                 <input placeholder='add name' onChange={(e) => setName(e.target.value)}></input>
                 <input placeholder='add surname' onChange={(e) => setSurname(e.target.value)} ></input>
                 <input placeholder='add date of birth' onChange={(e) => setDob(e.target.value)}></input>
-                <button onClick={() => addNewAuthor()}>post new author</button>
+                <Button variant="contained" onClick={() => addNewAuthor()}>post new author</Button>
             </div>
         </div>
     )
