@@ -3,10 +3,9 @@ import axios from 'axios';
 import { render } from '@testing-library/react';
 import ReactDropdown from 'react-dropdown';
 import Dropdown from 'react-dropdown';
-import Select from 'react-select'
+// import Select from 'react-select'
 import 'react-dropdown/style.css'
-import { Slider } from '@mui/material';
-
+import { InputLabel, MenuItem, Select, Slider } from '@mui/material';
 
 
 const KafkaAll =()=>{
@@ -28,6 +27,10 @@ const KafkaAll =()=>{
         control: (styles) =>({...styles, fontSize:10}),
         option: (styles) =>({...styles, fontSize:10})
     }
+
+    const handleChange = (event) => {
+        setChosenTopic(event.target.value);
+      };
 
 
     function getTopics()
@@ -63,18 +66,39 @@ const KafkaAll =()=>{
         return(
             <div  style={{fontSize:5}}>
             <h1 style={{color:'steelblue'}}>{chosenTopic} Total Messages: {messages.length}</h1>
-            <h1 style={{color:'red'}}>Select a Topic & Set an Offset Value</h1>
+            <h1 style={{color:'red'}}>Set an Offset Value</h1>
+            <div>
                 <Slider 
                     size="small"
-                    defaultValue={70}
+                    defaultValue={0}
                     valueLabelDisplay="auto"
                     min={0}
                     max={messages.length+offset-1}
                     onChange={(e) => setOffset(e.target.value)}
                 />
+                </div>
+
+                
+  <InputLabel id="demo-simple-select-label">Select a Topic</InputLabel>
+  <Select
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+    value={chosenTopic}
+    label="ChosenTopic"
+    onChange={handleChange}
+    size='small'
+  >
+    <MenuItem value={"updates"}>Updates</MenuItem>
+    <MenuItem value={"deletions"}>Deletions</MenuItem>
+    <MenuItem value={"books-sold"}>Books-Sold</MenuItem>
+    <MenuItem value={"posts"}>Posts</MenuItem>
+  </Select>
+
             {/* <input placeholder='(optional) set an offset value' onChange={(e) => setOffset(e.target.value)}></input> */}
             
-            <Select   options={options} onChange={e=> setChosenTopic(e.value)} styles={fontStyles}></Select>
+            {/* <Select   options={options} onChange={e=> setChosenTopic(e.value)} styles={fontStyles}></Select> */}
+
+ 
            
             <div     style={{ width: '200px', height:'300px',borderStyle:'solid', borderColor:'red',display:'block',overflowY:'scroll', borderRadius:4}}>
                 
